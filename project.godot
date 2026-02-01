@@ -15,6 +15,10 @@ run/main_scene="uid://dsog6dx4yid23"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GameController="*uid://cdx844exeon5h"
+
 [display]
 
 window/stretch/mode="canvas_items"

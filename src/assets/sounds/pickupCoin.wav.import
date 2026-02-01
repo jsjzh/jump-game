@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://b2x4b4lv7j46j"
-path="res://.godot/imported/pickupCoin.wav-6b3e965368091d25f11ad4adc95c4822.sample"
+path="res://.godot/imported/pickupCoin.wav-c4db0d5d709a4bb4f73bf5651cb58dfa.sample"
 
 [deps]
 
-source_file="res://src/assets/music/pickupCoin.wav"
-dest_files=["res://.godot/imported/pickupCoin.wav-6b3e965368091d25f11ad4adc95c4822.sample"]
+source_file="res://src/assets/sounds/pickupCoin.wav"
+dest_files=["res://.godot/imported/pickupCoin.wav-c4db0d5d709a4bb4f73bf5651cb58dfa.sample"]
 
 [params]
 

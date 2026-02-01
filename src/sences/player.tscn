@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://dpyxn5infqinh" path="res://src/scriprts/player.gd" id="1_eabyu"]
 [ext_resource type="Texture2D" uid="uid://b8cmjj8vq3r8d" path="res://src/assets/sprites/knight.png" id="1_ggan6"]
+[ext_resource type="AudioStream" uid="uid://d1c7eitwbgqyx" path="res://src/assets/sounds/hitHurt.wav" id="3_rggqk"]
+[ext_resource type="AudioStream" uid="uid://b55xtmvwkoslc" path="res://src/assets/sounds/jump.wav" id="4_2xjdo"]
+[ext_resource type="AudioStream" uid="uid://c2e3v3cnhbwpd" path="res://src/assets/sounds/Running.mp3" id="5_cevw7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ovfgh"]
 atlas = ExtResource("1_ggan6")
@@ -302,3 +305,16 @@ autoplay = "idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1542398045]
 position = Vector2(0, 6)
 shape = SubResource("CircleShape2D_ggan6")
+
+[node name="Audio" type="Node" parent="." unique_id=755090841]
+
+[node name="Dead" type="AudioStreamPlayer" parent="Audio" unique_id=1007700176]
+stream = ExtResource("3_rggqk")
+
+[node name="Jump" type="AudioStreamPlayer" parent="Audio" unique_id=467064558]
+stream = ExtResource("4_2xjdo")
+
+[node name="Roll" type="AudioStreamPlayer" parent="Audio" unique_id=855692665]
+
+[node name="Run" type="AudioStreamPlayer" parent="Audio" unique_id=778602321]
+stream = ExtResource("5_cevw7")
