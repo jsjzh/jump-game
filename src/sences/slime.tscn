@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://dthpkpxlc118c"]
 
+[ext_resource type="Script" uid="uid://b8urnt7i8k47r" path="res://src/scriprts/slime.gd" id="1_es2yb"]
 [ext_resource type="Texture2D" uid="uid://bl53gpvg5mh1y" path="res://src/assets/sprites/slime_green.png" id="1_p88ns"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_es2yb"]
@@ -41,15 +42,18 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_p88ns"]
 radius = 5.0
 
-[node name="Slime" type="Area2D" unique_id=370813390]
+[node name="Slime" type="Area2D" unique_id=370813390 groups=["slime"]]
 collision_layer = 16
 collision_mask = 3
+script = ExtResource("1_es2yb")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1276648441]
 sprite_frames = SubResource("SpriteFrames_xsv6b")
 autoplay = "default"
-frame_progress = 0.15881385
+frame_progress = 0.63826865
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=70749421]
 position = Vector2(0, 7)
 shape = SubResource("CircleShape2D_p88ns")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
