@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://dsog6dx4yid23"]
+
+[ext_resource type="PackedScene" uid="uid://wqtduebg4iy8" path="res://src/sences/player.tscn" id="1_6eufb"]
+
+[sub_resource type="TileSet" id="TileSet_6eufb"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_6eufb"]
+
+[node name="Game" type="Node" unique_id=345029013]
+
+[node name="GameController" type="Node" parent="." unique_id=1015556156]
+
+[node name="Level1" type="Node" parent="." unique_id=952970197]
+
+[node name="LevelController" type="Node" parent="Level1" unique_id=356198572]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="Level1" unique_id=1086984469]
+tile_set = SubResource("TileSet_6eufb")
+
+[node name="Player" parent="Level1" unique_id=1807796519 instance=ExtResource("1_6eufb")]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Level1" unique_id=641923841]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level1/StaticBody2D" unique_id=971865356]
+position = Vector2(0, 48)
+shape = SubResource("WorldBoundaryShape2D_6eufb")
