@@ -43,9 +43,11 @@ animations = [{
 radius = 6.0
 
 [node name="Player" type="CharacterBody2D" unique_id=1807796519]
+collision_layer = 2
+collision_mask = 147
 script = ExtResource("1_eabyu")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1426778049]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1426778049 groups=["player"]]
 zoom = Vector2(4, 4)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=392289911]

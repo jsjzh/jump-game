@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://dthpkpxlc118c"]
+
+[ext_resource type="Texture2D" uid="uid://bl53gpvg5mh1y" path="res://src/assets/sprites/slime_green.png" id="1_p88ns"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_es2yb"]
+atlas = ExtResource("1_p88ns")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gdc8t"]
+atlas = ExtResource("1_p88ns")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0efqe"]
+atlas = ExtResource("1_p88ns")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d8w6d"]
+atlas = ExtResource("1_p88ns")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xsv6b"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_es2yb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gdc8t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0efqe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d8w6d")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_p88ns"]
+radius = 5.0
+
+[node name="Slime" type="Area2D" unique_id=370813390]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1276648441]
+sprite_frames = SubResource("SpriteFrames_xsv6b")
+autoplay = "default"
+frame_progress = 0.3644037
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=70749421]
+position = Vector2(0, 7)
+shape = SubResource("CircleShape2D_p88ns")
