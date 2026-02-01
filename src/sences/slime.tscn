@@ -42,11 +42,13 @@ animations = [{
 radius = 5.0
 
 [node name="Slime" type="Area2D" unique_id=370813390]
+collision_layer = 16
+collision_mask = 3
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1276648441]
 sprite_frames = SubResource("SpriteFrames_xsv6b")
 autoplay = "default"
-frame_progress = 0.3644037
+frame_progress = 0.15881385
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=70749421]
 position = Vector2(0, 7)

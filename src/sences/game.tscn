@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://wqtduebg4iy8" path="res://src/sences/player.tscn" id="1_6eufb"]
 [ext_resource type="Script" uid="uid://cdx844exeon5h" path="res://src/scriprts/game_controller.gd" id="1_m577r"]
 [ext_resource type="PackedScene" uid="uid://bhbbcoictt3b1" path="res://src/sences/coin.tscn" id="3_vntt4"]
+[ext_resource type="PackedScene" uid="uid://dthpkpxlc118c" path="res://src/sences/slime.tscn" id="4_t86ne"]
 
 [sub_resource type="TileSet" id="TileSet_6eufb"]
 
@@ -23,10 +24,13 @@ tile_set = SubResource("TileSet_6eufb")
 [node name="Player" parent="Level1" unique_id=1807796519 instance=ExtResource("1_6eufb")]
 
 [node name="Coin" parent="Level1" unique_id=1502956515 instance=ExtResource("3_vntt4")]
-position = Vector2(40, 32)
+position = Vector2(48, 24)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Level1" unique_id=641923841]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level1/StaticBody2D" unique_id=971865356]
 position = Vector2(0, 48)
 shape = SubResource("WorldBoundaryShape2D_6eufb")
+
+[node name="Slime" parent="." unique_id=370813390 instance=ExtResource("4_t86ne")]
+position = Vector2(24, 16)
