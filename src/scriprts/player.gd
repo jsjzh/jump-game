@@ -23,6 +23,7 @@ func _physics_process(delta: float) -> void:
 			velocity.y = - state.get("jump_speed")
 	else:
 		velocity.y += get_gravity().y * delta
+		animated_sprite.play("jump")
 
 	var direction = Input.get_axis("left", "right")
 
@@ -35,23 +36,13 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, state.get("run_reduce_speed") * 100 * delta)
 
+	if is_on_floor():
+		if velocity.x != 0:
+			animated_sprite.play("run")
+		else:
+			animated_sprite.play("idle")
+
 	move_and_slide()
-
-
-	# handleJump()
-
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	# var direction := Input.get_axis("left", "right")
-
-	# if direction:
-	# 	velocity.x = direction * SPEED * delta
-	# else:
-	# 	velocity.x = move_toward(velocity.x, 0, SPEED * delta)
-
-
-# func handleJump() -> void:
-
 
 func on_attack_by_slime() -> void:
 	animated_sprite.play("dead")
