@@ -5,6 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://d1c7eitwbgqyx" path="res://src/assets/sounds/hitHurt.wav" id="3_rggqk"]
 [ext_resource type="AudioStream" uid="uid://b55xtmvwkoslc" path="res://src/assets/sounds/jump.wav" id="4_2xjdo"]
 [ext_resource type="AudioStream" uid="uid://c2e3v3cnhbwpd" path="res://src/assets/sounds/Running.mp3" id="5_cevw7"]
+[ext_resource type="FontFile" uid="uid://dbjl1e6kdxpl6" path="res://src/assets/fonts/PixelOperator8.ttf" id="6_cevw7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ovfgh"]
 atlas = ExtResource("1_ggan6")
@@ -274,7 +275,7 @@ collision_mask = 147
 script = ExtResource("1_eabyu")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1426778049]
-zoom = Vector2(4, 4)
+zoom = Vector2(5, 5)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=392289911]
 sprite_frames = SubResource("SpriteFrames_cevw7")
@@ -302,5 +303,15 @@ stream = ExtResource("5_cevw7")
 
 [node name="RollTimer" type="Timer" parent="." unique_id=1350475507]
 one_shot = true
+
+[node name="StatusLabel" type="Label" parent="." unique_id=2072420841]
+offset_left = -128.0
+offset_top = -72.0
+offset_right = -88.0
+offset_bottom = -49.0
+theme_override_fonts/font = ExtResource("6_cevw7")
+theme_override_font_sizes/font_size = 8
+vertical_alignment = 1
+autowrap_mode = 2
 
 [connection signal="timeout" from="RollTimer" to="." method="_on_roll_timer_timeout"]
