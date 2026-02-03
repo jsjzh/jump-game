@@ -13,7 +13,7 @@ class Player:
 	var jump_max_count: int = 2
 	var jump_count: int = 0
 	var roll_speed: float = 200.0
-	var roll_time: float = 0.3
+	var roll_time: float = 0.5
 
 var player = Player.new()
 
