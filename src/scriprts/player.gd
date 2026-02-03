@@ -18,47 +18,54 @@ class Player:
 var player = Player.new()
 
 func _physics_process(delta: float) -> void:
-	# 如果不在地面上，就施加重力
-	if !is_on_floor():
-		if Input.is_action_just_pressed("jump") and player.jump_count < player.jump_max_count:
-			player.jump_count += 1
-			velocity.y = - player.jump_speed
-		velocity.y += get_gravity().y * delta
+	if player.current_status == PlayStatus.DEAD:
+		if !is_on_floor():
+			velocity.y += get_gravity().y * delta
+		velocity.x = 0
 	else:
-		player.jump_count = 0
-		if Input.is_action_just_pressed("jump"):
-			velocity.y = - player.jump_speed
-			player.jump_count += 1
-		if Input.is_action_just_pressed("roll"):
-			if player.current_status != PlayStatus.ROLL:
-				player.current_status = PlayStatus.ROLL
-				roll_timer.start(player.roll_time)
+		# 如果不在地面上，就施加重力
+		if !is_on_floor():
+			if Input.is_action_just_pressed("jump") and player.jump_count < player.jump_max_count:
+				player.jump_count += 1
+				velocity.y = - player.jump_speed
+			velocity.y += get_gravity().y * delta
+		else:
+			player.jump_count = 0
+			if Input.is_action_just_pressed("jump"):
+				velocity.y = - player.jump_speed
+				player.jump_count += 1
+			if Input.is_action_just_pressed("roll"):
+				if player.current_status != PlayStatus.ROLL:
+					player.current_status = PlayStatus.ROLL
+					roll_timer.start(player.roll_time)
 
-	var direction = Input.get_axis("left", "right")
+		var direction = Input.get_axis("left", "right")
 
-	if direction:
-		if player.current_status == PlayStatus.ROLL:
-			# 这里不需要乘以 delta，因为下面的 move_and_slide() 会自动乘以 delta
-			velocity.x = direction * player.roll_speed
+		if direction:
+			if player.current_status == PlayStatus.ROLL:
+				# 这里不需要乘以 delta，因为下面的 move_and_slide() 会自动乘以 delta
+				velocity.x = direction * player.roll_speed
+			else:
+				# 这里不需要乘以 delta，因为下面的 move_and_slide() 会自动乘以 delta
+				velocity.x = direction * player.run_speed
+			if direction > 0:
+					animated_sprite.flip_h = false
+			else:
+				animated_sprite.flip_h = true
 		else:
-			# 这里不需要乘以 delta，因为下面的 move_and_slide() 会自动乘以 delta
-			velocity.x = direction * player.run_speed
-		if direction > 0:
-				animated_sprite.flip_h = false
-		else:
-			animated_sprite.flip_h = true
-	else:
-		if player.current_status == PlayStatus.ROLL:
-			# 这里需要乘以 delta，因为我算的是加速度，而加速度是每帧的加速度，所以需要乘以 delta
-			velocity.x = move_toward(velocity.x, 0, player.roll_speed / player.roll_time * delta)
-		else:
-			# 这里需要乘以 delta，因为我算的是加速度，而加速度是每帧的加速度，所以需要乘以 delta
-			velocity.x = move_toward(velocity.x, 0, player.run_speed / player.run_time * delta)
+			if player.current_status == PlayStatus.ROLL:
+				# 这里需要乘以 delta，因为我算的是加速度，而加速度是每帧的加速度，所以需要乘以 delta
+				velocity.x = move_toward(velocity.x, 0, player.roll_speed / player.roll_time * delta)
+			else:
+				# 这里需要乘以 delta，因为我算的是加速度，而加速度是每帧的加速度，所以需要乘以 delta
+				velocity.x = move_toward(velocity.x, 0, player.run_speed / player.run_time * delta)
 
 	move_and_slide()
 	play_animate(velocity)
 
 func play_animate(speed: Vector2):
+	if player.current_status == PlayStatus.DEAD:
+		return
 	if is_on_floor():
 		if speed.x != 0:
 			if player.current_status == PlayStatus.ROLL:
@@ -74,4 +81,5 @@ func _on_roll_timer_timeout() -> void:
 	player.current_status = PlayStatus.IDLE
 
 func on_attack_by_slime() -> void:
+	player.current_status = PlayStatus.DEAD
 	animated_sprite.play("dead")
