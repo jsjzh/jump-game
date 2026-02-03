@@ -38,4 +38,4 @@ position = Vector2(0, 48)
 shape = SubResource("WorldBoundaryShape2D_6eufb")
 
 [node name="Slime" parent="." unique_id=370813390 instance=ExtResource("4_t86ne")]
-position = Vector2(24, 16)
+position = Vector2(96, -56)

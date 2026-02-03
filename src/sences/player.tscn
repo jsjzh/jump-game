@@ -300,6 +300,7 @@ stream = ExtResource("4_2xjdo")
 
 [node name="Run" type="AudioStreamPlayer" parent="Audio" unique_id=778602321]
 stream = ExtResource("5_cevw7")
+autoplay = true
 
 [node name="RollTimer" type="Timer" parent="." unique_id=1350475507]
 one_shot = true

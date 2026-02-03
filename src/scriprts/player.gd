@@ -57,9 +57,17 @@ func _process(delta):
 
 func _physics_process(delta: float) -> void:
 	match current_status:
-		Status.IDLE, Status.RUN, Status.JUMP, Status.ROLL:
-			apply_gravity(delta)
-			move_and_slide()
+		Status.IDLE:
+			pass
+		Status.RUN:
+			velocity.x = move_toward(velocity.x, 0, roll_speed / run_time * delta)
+		Status.JUMP:
+			pass
+		Status.ROLL:
+			velocity.x = move_toward(velocity.x, 0, roll_speed / roll_time * delta)
+
+	apply_gravity(delta)
+	move_and_slide()
 
 func update_idle(_delta: float):
 	var input_direction = get_input_direction()
@@ -133,10 +141,11 @@ func change_status(new_status: Status):
 
 func enter_status(status: Status):
 	status_timer = 0.0
+
 	match status:
 		Status.IDLE:
 			animated_sprite.play("idle")
-			status_timer = 0.2
+			# status_timer = 0.2
 		Status.RUN:
 			animated_sprite.play("run")
 			audio_run.play()
@@ -218,8 +227,7 @@ func exit_status(status: Status):
 # 	move_and_slide()
 # 	play_animate(velocity)
 
-
-# 工具函数
+# ============================== 工具函数 ==============================
 
 func get_input_direction() -> float:
 	return Input.get_axis("left", "right")
@@ -232,7 +240,6 @@ func change_facing_direction(facing_right: bool):
 func apply_gravity(delta: float):
 	if not is_on_floor():
 			velocity.y += get_gravity().y * delta # 标准重力
-
 
 func play_animate(speed: Vector2):
 	if current_status == Status.DEAD:
@@ -248,6 +255,12 @@ func play_animate(speed: Vector2):
 	else:
 		animated_sprite.play("jump")
 
+func update_status_label():
+	if status_label:
+		status_label.text = "status: %s velocity.x: %.1f velocity.y: %.1f" % [Status.keys()[current_status], velocity.x, velocity.y]
+
+# ============================== 外部接口 ==============================
+
 func _on_roll_timer_timeout() -> void:
 	current_status = Status.IDLE
 
@@ -255,7 +268,3 @@ func on_attack_by_slime() -> void:
 	current_status = Status.DEAD
 	animated_sprite.play("dead")
 	audio_dead.play()
-
-func update_status_label():
-	if status_label:
-		status_label.text = "status: %s velocity.x: %.1f velocity.y: %.1f" % [Status.keys()[current_status], velocity.x, velocity.y]
