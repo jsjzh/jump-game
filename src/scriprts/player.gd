@@ -7,7 +7,8 @@ class Player:
 	var run_speed: float = 100
 	var run_reduce_speed: float = 10
 	var jump_speed: float = 300
-	var jump_count: int = 2
+	var jump_max_count: int = 2
+	var jump_count: int = 0
 	var roll_speed: float = 150
 	var roll_time: float = 0.5
 
@@ -23,15 +24,15 @@ var player = Player.new()
 func _physics_process(delta: float) -> void:
 	# 如果不在地面上，就施加重力
 	if !is_on_floor():
-		if Input.is_action_just_pressed("jump") and player.jump_count > 0:
-			player.jump_count -= 1
+		if Input.is_action_just_pressed("jump") and player.jump_count < player.jump_max_count:
+			player.jump_count += 1
 			velocity.y = - player.jump_speed
 		velocity.y += get_gravity().y * delta
 	else:
-		player.jump_count = 2
+		player.jump_count = 0
 		if Input.is_action_just_pressed("jump"):
 			velocity.y = - player.jump_speed
-			player.jump_count -= 1
+			player.jump_count += 1
 		if Input.is_action_just_pressed("roll"):
 			player.current_status = PlayStatus.ROLL
 			await get_tree().create_timer(player.roll_time).timeout
