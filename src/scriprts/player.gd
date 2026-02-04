@@ -2,13 +2,19 @@ extends CharacterBody2D
 
 class_name Player
 
-enum Status {DEAD, IDLE, JUMP, ROLL, RUN}
+enum Status {
+	IDLE,
+	RUN,
+	JUMP,
+	# ROLL,
+	DEAD,
+}
 
-@export_category("状态机参数")
+@export_category("玩家状态")
 @export var initial_status: Status = Status.IDLE
 @export var debug_display_status: bool = true
 
-@export_category("玩家参数")
+@export_category("玩家属性")
 @export var run_speed: float = 150.0 ## 移动速度
 @export var run_time: float = 0.2 ## 移动缓停时间
 @export var jump_velocity: float = 300.0 ## 跳跃高度
@@ -29,10 +35,17 @@ var current_status: Status = initial_status
 var previous_status: Status = initial_status
 var current_jump_count: int = 0
 var is_facing_right: bool = true
+# 原先是把 roll 放在 status 状态里维护
+# 但是想想，我为什么不能在 jump 的过程中 roll，那我如果在天空 roll 了
+# 那我应该是 jump 态还是 roll 态？
+# 所以，我还是把这个当成是标志位来处理
+var is_roll: bool = false
+
 var status_timer: float = 0.0
 
 func _ready():
 	enter_status(current_status)
+
 	if debug_display_status:
 		update_status_label()
 
@@ -42,15 +55,13 @@ func _process(delta):
 
 	match current_status:
 		Status.IDLE:
-			update_idle(delta)
+			handle_idle(delta)
 		Status.RUN:
-			update_run(delta)
+			handle_run(delta)
 		Status.JUMP:
-			update_jump(delta)
-		Status.ROLL:
-			update_roll(delta)
+			handle_jump(delta)
 		Status.DEAD:
-			update_dead(delta)
+			handle_dead(delta)
 
 	if debug_display_status:
 		update_status_label()
@@ -63,67 +74,71 @@ func _physics_process(delta: float) -> void:
 			velocity.x = move_toward(velocity.x, 0, roll_speed / run_time * delta)
 		Status.JUMP:
 			pass
-		Status.ROLL:
-			velocity.x = move_toward(velocity.x, 0, roll_speed / roll_time * delta)
 
 	apply_gravity(delta)
 	move_and_slide()
 
-func update_idle(_delta: float):
+func handle_idle(_delta: float):
 	var input_direction = get_input_direction()
 
-	if input_direction != 0:
+	if input_direction != 0 and is_on_floor():
 		change_status(Status.RUN)
 	elif Input.is_action_just_pressed("jump") and is_on_floor():
 		change_status(Status.JUMP)
-	elif Input.is_action_just_pressed("roll") and is_on_floor():
-		change_status(Status.ROLL)
+	# elif Input.is_action_just_pressed("roll") and is_on_floor():
+		# change_status(Status.ROLL)
 
 	if input_direction != 0:
 		change_facing_direction(input_direction > 0)
 
-func update_run(_delta: float):
+func handle_run(_delta: float):
 	var input_direction = get_input_direction()
 
 	velocity.x = input_direction * run_speed
 
-	if input_direction == 0:
+	if input_direction == 0 and is_on_floor():
 		change_status(Status.IDLE)
 	elif Input.is_action_just_pressed("jump") and is_on_floor():
 		change_status(Status.JUMP)
-	elif Input.is_action_just_pressed("roll") and is_on_floor():
-		change_status(Status.ROLL)
+	# elif Input.is_action_just_pressed("roll") and is_on_floor():
+	# 	change_status(Status.ROLL)
 
 	if input_direction != 0:
 		change_facing_direction(input_direction > 0)
 
-func update_jump(_delta: float):
+func handle_jump(_delta: float):
 	var input_direction = get_input_direction()
 
 	velocity.x = input_direction * run_speed * 0.8
 	velocity.y = - jump_velocity
 
 	if is_on_floor():
-		if input_direction == 0:
-			change_status(Status.IDLE)
-		else:
+		if input_direction != 0:
 			change_status(Status.RUN)
+		elif input_direction == 0:
+			change_status(Status.IDLE)
+		# elif Input.is_action_just_pressed("roll"):
+		# 	change_status(Status.ROLL)
+	# else:
+	# 	if Input.is_action_just_pressed("roll"):
+	# 		change_status(Status.ROLL)
 
 	if input_direction != 0:
 		change_facing_direction(input_direction > 0)
 
-func update_roll(_delta: float):
-	var roll_direction = 1 if is_facing_right else -1
+func handle_roll(_delta: float):
+	pass
+	# var input_direction = get_input_direction()
 
-	velocity.x = roll_direction * roll_speed
+	# var roll_direction = 1 if is_facing_right else -1
+	# velocity.x = roll_direction * roll_speed
 
-	if status_timer <= 0:
-		if is_on_floor():
-			change_status(Status.IDLE)
-		else:
-			change_status(Status.JUMP)
+	# if is_on_floor():
+	# 	change_status(Status.IDLE)
+	# else:
+	# 	change_status(Status.JUMP)
 
-func update_dead(_delta: float):
+func handle_dead(_delta: float):
 	pass
 
 func change_status(new_status: Status):
@@ -152,9 +167,9 @@ func enter_status(status: Status):
 		Status.JUMP:
 			animated_sprite.play("jump")
 			audio_jump.play()
-		Status.ROLL:
-			animated_sprite.play("roll")
-			status_timer = roll_time
+		# Status.ROLL:
+		# 	animated_sprite.play("roll")
+		# 	status_timer = roll_time
 			# audio_roll.play()
 		Status.DEAD:
 			animated_sprite.play("dead")
@@ -241,23 +256,23 @@ func apply_gravity(delta: float):
 	if not is_on_floor():
 			velocity.y += get_gravity().y * delta # 标准重力
 
-func play_animate(speed: Vector2):
-	if current_status == Status.DEAD:
-		return
-	if is_on_floor():
-		if speed.x != 0:
-			if current_status == Status.ROLL:
-				animated_sprite.play("roll")
-			else:
-				animated_sprite.play("run")
-		else:
-			animated_sprite.play("idle")
-	else:
-		animated_sprite.play("jump")
+# func play_animate(speed: Vector2):
+# 	if current_status == Status.DEAD:
+# 		return
+# 	if is_on_floor():
+# 		if speed.x != 0:
+# 			if current_status == Status.ROLL:
+# 				animated_sprite.play("roll")
+# 			else:
+# 				animated_sprite.play("run")
+# 		else:
+# 			animated_sprite.play("idle")
+# 	else:
+# 		animated_sprite.play("jump")
 
 func update_status_label():
 	if status_label:
-		status_label.text = "status: %s velocity.x: %.1f velocity.y: %.1f" % [Status.keys()[current_status], velocity.x, velocity.y]
+		status_label.text = "status: %s velocity.x: %.1f velocity.y: %.1f is_on_floor %s" % [Status.keys()[current_status], velocity.x, velocity.y, is_on_floor()]
 
 # ============================== 外部接口 ==============================
 

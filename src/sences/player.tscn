@@ -275,7 +275,7 @@ collision_mask = 147
 script = ExtResource("1_eabyu")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1426778049]
-zoom = Vector2(5, 5)
+zoom = Vector2(4, 4)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=392289911]
 sprite_frames = SubResource("SpriteFrames_cevw7")
@@ -306,10 +306,10 @@ autoplay = true
 one_shot = true
 
 [node name="StatusLabel" type="Label" parent="." unique_id=2072420841]
-offset_left = -128.0
-offset_top = -72.0
-offset_right = -88.0
-offset_bottom = -49.0
+offset_left = -160.0
+offset_top = -90.0
+offset_right = -120.0
+offset_bottom = -67.0
 theme_override_fonts/font = ExtResource("6_cevw7")
 theme_override_font_sizes/font_size = 8
 vertical_alignment = 1
