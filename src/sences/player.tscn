@@ -210,7 +210,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"roll",
-"speed": 10.0
+"speed": 16.7
 }, {
 "frames": [{
 "duration": 1.0,
@@ -281,8 +281,6 @@ zoom = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_cevw7")
 animation = &"roll"
 autoplay = "idle"
-frame = 3
-frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1542398045]
 position = Vector2(0, 6)
@@ -302,9 +300,6 @@ stream = ExtResource("4_2xjdo")
 stream = ExtResource("5_cevw7")
 autoplay = true
 
-[node name="RollTimer" type="Timer" parent="." unique_id=1350475507]
-one_shot = true
-
 [node name="StatusLabel" type="Label" parent="." unique_id=2072420841]
 offset_left = -160.0
 offset_top = -90.0
@@ -314,5 +309,3 @@ theme_override_fonts/font = ExtResource("6_cevw7")
 theme_override_font_sizes/font_size = 8
 vertical_alignment = 1
 autowrap_mode = 2
-
-[connection signal="timeout" from="RollTimer" to="." method="_on_roll_timer_timeout"]
