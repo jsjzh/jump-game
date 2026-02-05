@@ -8,7 +8,7 @@ class_name Player
 @export_category("玩家属性")
 @export var run_speed: float = 180.0 ## 移动速度
 @export var jump_velocity: float = 300.0 ## 跳跃高度
-# @export var jump_max_count: int = 2 ## 跳跃次数
+@export var jump_max_count: int = 2 ## 跳跃次数
 @export var roll_speed: float = 220.0 ## 翻滚速度
 @export var roll_time: float = 0.3 ## 翻滚缓停时间，这个时间必须和动画的时间匹配，比如动画有 5 个动画帧，那就意味着要 0.2 秒播完 5 个动画帧，等于 1 秒播完 25 个动画帧，也就是需要配置 animate_sprite 为 25FPS
 
@@ -21,16 +21,22 @@ class_name Player
 @onready var audio_run: AudioStreamPlayer = $Audio/Run
 
 var input_direction: Vector2 = Vector2.ZERO
-var is_press_jump: bool = false
-var is_press_roll: bool = false
+
+var is_jumping: bool = false
+var jump_count: int = 0
+
+var is_rolling: bool = false
 var roll_duration: float = 0.0
 
 func _input(event):
 	if event.is_action_pressed("jump"):
-		is_press_jump = true
+		if is_on_floor() or jump_count < jump_max_count:
+			is_jumping = true
+			jump_count += 1
 	if event.is_action_released("roll"):
-		roll_duration = roll_time
-		is_press_roll = true
+		if is_on_floor():
+			roll_duration = roll_time
+			is_rolling = true
 
 func _process(_delta):
 	input_direction.x = Input.get_axis("left", "right")
@@ -39,13 +45,13 @@ func _process(_delta):
 		update_status_label()
 
 func _physics_process(delta):
-	if is_press_roll:
+	if is_rolling:
 		roll_duration -= delta
 
-	if is_press_jump:
+	if is_jumping:
 		velocity.y = - jump_velocity
 
-	if is_press_roll:
+	if is_rolling:
 		velocity.x = (-1 if animated_sprite.flip_h else 1) * roll_speed
 	else:
 		velocity.x = input_direction.x * run_speed
@@ -59,7 +65,7 @@ func _physics_process(delta):
 		animated_sprite.flip_h = false
 
 	if is_on_floor():
-		if is_press_roll:
+		if is_rolling:
 			animated_sprite.play("roll")
 		elif input_direction.x == 0:
 			animated_sprite.play("idle")
@@ -70,10 +76,13 @@ func _physics_process(delta):
 
 	move_and_slide()
 
-	is_press_jump = false
+	is_jumping = false
+
+	if is_on_floor():
+		jump_count = 0
 
 	if roll_duration <= 0:
-		is_press_roll = false
+		is_rolling = false
 
 func update_status_label():
 	if status_label:
