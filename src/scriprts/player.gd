@@ -35,10 +35,12 @@ func _input(event):
 		if is_on_floor() or jump_count < jump_max_count:
 			is_jumping = true
 			jump_count += 1
+			audio_jump.play()
 	if event.is_action_released("roll"):
 		if is_on_floor():
 			roll_duration = roll_time
 			is_rolling = true
+			audio_roll.play()
 
 func _process(_delta):
 	if is_dead:
@@ -83,6 +85,7 @@ func _physics_process(delta):
 			animated_sprite.play("idle")
 		else:
 			animated_sprite.play("run")
+			audio_run.play()
 	else:
 		animated_sprite.play("jump")
 
