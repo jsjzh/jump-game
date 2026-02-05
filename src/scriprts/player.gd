@@ -10,7 +10,11 @@ class_name Player
 @export var jump_velocity: float = 300.0 ## 跳跃高度
 @export var jump_max_count: int = 2 ## 跳跃次数
 @export var roll_speed: float = 220.0 ## 翻滚速度
-@export var roll_time: float = 0.3 ## 翻滚缓停时间，这个时间必须和动画的时间匹配，比如动画有 5 个动画帧，那就意味着要 0.2 秒播完 5 个动画帧，等于 1 秒播完 25 个动画帧，也就是需要配置 animate_sprite 为 25FPS
+## 翻滚缓停时间，这个时间必须和动画的时间匹配
+## 比如动画有 5 个动画帧，那就意味着要 0.2 秒播完 5 个动画帧
+## 等于 1 秒播完 25 个动画帧，也就是需要配置 animate_sprite 为 25FPS
+## 计算公式 1(单位时间)/FPS(设置 FPS)=0.3(roll_time)/5(动画帧个数)
+@export var roll_time: float = 0.3
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var status_label: Label = $StatusLabel
