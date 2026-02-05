@@ -44,7 +44,7 @@ radius = 5.0
 
 [node name="Slime" type="Area2D" unique_id=370813390 groups=["slime"]]
 collision_layer = 16
-collision_mask = 3
+collision_mask = 259
 script = ExtResource("1_es2yb")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1276648441]
@@ -56,4 +56,5 @@ frame_progress = 0.63826865
 position = Vector2(0, 7)
 shape = SubResource("CircleShape2D_p88ns")
 
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
