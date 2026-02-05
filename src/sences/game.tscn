@@ -223,17 +223,53 @@ shape = SubResource("WorldBoundaryShape2D_6eufb")
 
 [node name="Coins" type="Node" parent="Level1" unique_id=1595034113]
 
+[node name="Coin" parent="Level1/Coins" unique_id=1502956515 instance=ExtResource("3_vntt4")]
+position = Vector2(72, 32)
+
 [node name="Coin2" parent="Level1/Coins" unique_id=2002407721 instance=ExtResource("3_vntt4")]
 position = Vector2(88, 32)
 
 [node name="Coin3" parent="Level1/Coins" unique_id=228360677 instance=ExtResource("3_vntt4")]
 position = Vector2(104, 32)
 
-[node name="Coin" parent="Level1/Coins" unique_id=1502956515 instance=ExtResource("3_vntt4")]
-position = Vector2(72, 32)
-
 [node name="Coin4" parent="Level1/Coins" unique_id=2037010218 instance=ExtResource("3_vntt4")]
 position = Vector2(120, 32)
+
+[node name="Coin5" parent="Level1/Coins" unique_id=872851888 instance=ExtResource("3_vntt4")]
+position = Vector2(152, 32)
+
+[node name="Coin6" parent="Level1/Coins" unique_id=577180231 instance=ExtResource("3_vntt4")]
+position = Vector2(168, 32)
+
+[node name="Coin7" parent="Level1/Coins" unique_id=994823544 instance=ExtResource("3_vntt4")]
+position = Vector2(136, 32)
+
+[node name="Coin8" parent="Level1/Coins" unique_id=851465339 instance=ExtResource("3_vntt4")]
+position = Vector2(184, 32)
+
+[node name="Coin9" parent="Level1/Coins" unique_id=521287861 instance=ExtResource("3_vntt4")]
+position = Vector2(-56, 32)
+
+[node name="Coin10" parent="Level1/Coins" unique_id=212222403 instance=ExtResource("3_vntt4")]
+position = Vector2(-40, 32)
+
+[node name="Coin11" parent="Level1/Coins" unique_id=953175277 instance=ExtResource("3_vntt4")]
+position = Vector2(-24, 32)
+
+[node name="Coin12" parent="Level1/Coins" unique_id=1218412405 instance=ExtResource("3_vntt4")]
+position = Vector2(-8, 32)
+
+[node name="Coin13" parent="Level1/Coins" unique_id=1536400771 instance=ExtResource("3_vntt4")]
+position = Vector2(24, 32)
+
+[node name="Coin14" parent="Level1/Coins" unique_id=2132491255 instance=ExtResource("3_vntt4")]
+position = Vector2(40, 32)
+
+[node name="Coin15" parent="Level1/Coins" unique_id=1919144113 instance=ExtResource("3_vntt4")]
+position = Vector2(8, 32)
+
+[node name="Coin16" parent="Level1/Coins" unique_id=1583547817 instance=ExtResource("3_vntt4")]
+position = Vector2(56, 32)
 
 [node name="Slime" parent="." unique_id=370813390 instance=ExtResource("4_t86ne")]
 position = Vector2(96, -56)
