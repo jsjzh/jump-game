@@ -51,6 +51,8 @@ func _input(event):
 	if event.is_action_released("attack"):
 		if attack_acc_time == attack_max_curr_time:
 			arrow.handle_shoot((get_global_mouse_position() - position).normalized())
+		else:
+			arrow.queue_free()
 		is_attack = false
 		attack_acc_time = 0.0
 
