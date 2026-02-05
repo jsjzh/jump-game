@@ -21,14 +21,16 @@ class_name Player
 @onready var audio_run: AudioStreamPlayer = $Audio/Run
 
 var input_direction: Vector2 = Vector2.ZERO
-
+var is_dead: bool = false
 var is_jumping: bool = false
 var jump_count: int = 0
-
 var is_rolling: bool = false
 var roll_duration: float = 0.0
 
 func _input(event):
+	if is_dead:
+		return
+
 	if event.is_action_pressed("jump"):
 		if is_on_floor() or jump_count < jump_max_count:
 			is_jumping = true
@@ -39,12 +41,22 @@ func _input(event):
 			is_rolling = true
 
 func _process(_delta):
+	if is_dead:
+		return
+
 	input_direction.x = Input.get_axis("left", "right")
 
 	if debug_display_status:
 		update_status_label()
 
 func _physics_process(delta):
+	if is_dead:
+		if !is_on_floor():
+			velocity.x = 0
+			velocity.y += get_gravity().y * delta
+			move_and_slide()
+		return
+
 	if is_rolling:
 		roll_duration -= delta
 
@@ -89,5 +101,6 @@ func update_status_label():
 		status_label.text = "velocity.x: %.1f velocity.y: %.1f is_on_floor %s" % [velocity.x, velocity.y, is_on_floor()]
 
 func on_attack_by_slime() -> void:
+	is_dead = true
 	animated_sprite.play("dead")
 	audio_dead.play()
