@@ -15,14 +15,19 @@ class_name Player
 ## 等于 1 秒播完 25 个动画帧，也就是需要配置 animate_sprite 为 25FPS
 ## 计算公式 1(单位时间)/FPS(设置 FPS)=0.3(roll_time)/5(动画帧个数)
 @export var roll_time: float = 0.3
+@export var attack_max_curr_time: float = 1.0 ## 最高蓄力时间
+
+@export var arrow_sence: PackedScene
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var status_label: Label = $StatusLabel
+@onready var countdown_label: Label = $CountdownLabel
 
 @onready var audio_dead: AudioStreamPlayer = $Audio/Dead
 @onready var audio_jump: AudioStreamPlayer = $Audio/Jump
 @onready var audio_roll: AudioStreamPlayer = $Audio/Roll
 @onready var audio_run: AudioStreamPlayer = $Audio/Run
+
 
 var input_direction: Vector2 = Vector2.ZERO
 var is_dead: bool = false
@@ -30,10 +35,22 @@ var is_jumping: bool = false
 var jump_count: int = 0
 var is_rolling: bool = false
 var roll_duration: float = 0.0
+var is_attack: bool = false
+var attack_acc_time: float = 0.0
 
 func _input(event):
 	if is_dead:
 		return
+
+	if event.is_action_pressed("attack"):
+		is_attack = true
+	if event.is_action_released("attack"):
+		if attack_acc_time == attack_max_curr_time:
+			var arrow = arrow_sence.instantiate()
+			arrow.handle_shoot(position, Vector2.ZERO)
+			get_tree().current_scene.add_child(arrow)
+		is_attack = false
+		attack_acc_time = 0.0
 
 	if event.is_action_pressed("jump"):
 		if is_on_floor() or jump_count < jump_max_count:
@@ -46,9 +63,14 @@ func _input(event):
 			is_rolling = true
 			audio_roll.play()
 
-func _process(_delta):
+func _process(delta):
 	if is_dead:
 		return
+
+	if is_attack:
+		attack_acc_time = clamp(attack_acc_time + delta, 0.0, attack_max_curr_time)
+
+	countdown_label.text = "%.1f" % (attack_acc_time)
 
 	input_direction.x = Input.get_axis("left", "right")
 

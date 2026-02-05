@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dpyxn5infqinh" path="res://src/scriprts/player.gd" id="1_eabyu"]
 [ext_resource type="Texture2D" uid="uid://b8cmjj8vq3r8d" path="res://src/assets/sprites/knight.png" id="1_ggan6"]
+[ext_resource type="PackedScene" uid="uid://cti31iil0y4al" path="res://src/sences/arrow.tscn" id="2_2asoo"]
 [ext_resource type="AudioStream" uid="uid://d1c7eitwbgqyx" path="res://src/assets/sounds/hitHurt.wav" id="3_rggqk"]
 [ext_resource type="AudioStream" uid="uid://b55xtmvwkoslc" path="res://src/assets/sounds/jump.wav" id="4_2xjdo"]
 [ext_resource type="AudioStream" uid="uid://c2e3v3cnhbwpd" path="res://src/assets/sounds/Running.mp3" id="5_cevw7"]
@@ -273,6 +274,7 @@ radius = 6.0
 collision_layer = 2
 collision_mask = 147
 script = ExtResource("1_eabyu")
+arrow_sence = ExtResource("2_2asoo")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1426778049]
 zoom = Vector2(4, 4)
@@ -309,3 +311,16 @@ theme_override_fonts/font = ExtResource("6_cevw7")
 theme_override_font_sizes/font_size = 8
 vertical_alignment = 1
 autowrap_mode = 2
+
+[node name="CountdownLabel" type="Label" parent="." unique_id=1318751903]
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+theme_override_fonts/font = ExtResource("6_cevw7")
+theme_override_font_sizes/font_size = 8
+text = "0.0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Arrow" parent="." unique_id=961413926 instance=ExtResource("2_2asoo")]
+position = Vector2(0, -6)

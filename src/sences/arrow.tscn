@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cti31iil0y4al"]
+
+[ext_resource type="Texture2D" uid="uid://djs8wa5wx3y1r" path="res://src/assets/sprites/bullet.png" id="1_ffxnv"]
+[ext_resource type="Script" uid="uid://d33cyu51t8ctc" path="res://src/scriprts/arrow.gd" id="1_ltcx0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kxdby"]
+size = Vector2(6, 3)
+
+[node name="Arrow" type="Area2D" unique_id=961413926 groups=["arrow"]]
+collision_layer = 256
+collision_mask = 17
+script = ExtResource("1_ltcx0")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=473659843]
+texture = ExtResource("1_ffxnv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1988429717]
+shape = SubResource("RectangleShape2D_kxdby")
