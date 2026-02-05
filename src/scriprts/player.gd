@@ -38,17 +38,19 @@ var roll_duration: float = 0.0
 var is_attack: bool = false
 var attack_acc_time: float = 0.0
 
+var arrow: Node
+
 func _input(event):
 	if is_dead:
 		return
 
 	if event.is_action_pressed("attack"):
+		arrow = arrow_sence.instantiate()
+		get_tree().current_scene.add_child(arrow)
 		is_attack = true
 	if event.is_action_released("attack"):
 		if attack_acc_time == attack_max_curr_time:
-			var arrow = arrow_sence.instantiate()
-			arrow.handle_shoot(position, Vector2.ZERO)
-			get_tree().current_scene.add_child(arrow)
+			arrow.handle_shoot((get_global_mouse_position() - position).normalized())
 		is_attack = false
 		attack_acc_time = 0.0
 
@@ -69,6 +71,8 @@ func _process(delta):
 
 	if is_attack:
 		attack_acc_time = clamp(attack_acc_time + delta, 0.0, attack_max_curr_time)
+		arrow.handle_position(Vector2(position.x, position.y - 6))
+		arrow.handle_rotation((get_global_mouse_position() - position).angle())
 
 	countdown_label.text = "%.1f" % (attack_acc_time)
 
@@ -107,11 +111,14 @@ func _physics_process(delta):
 	if is_on_floor():
 		if is_rolling:
 			animated_sprite.play("roll")
-		elif input_direction.x == 0:
-			animated_sprite.play("idle")
-		else:
+		elif input_direction.x != 0:
 			animated_sprite.play("run")
-			audio_run.play()
+			if !audio_run.playing:
+				audio_run.play()
+		else:
+			animated_sprite.play("idle")
+			audio_run.stop()
+			
 	else:
 		animated_sprite.play("jump")
 

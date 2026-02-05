@@ -2,11 +2,30 @@
 
 [ext_resource type="Script" uid="uid://dpyxn5infqinh" path="res://src/scriprts/player.gd" id="1_eabyu"]
 [ext_resource type="Texture2D" uid="uid://b8cmjj8vq3r8d" path="res://src/assets/sprites/knight.png" id="1_ggan6"]
-[ext_resource type="PackedScene" uid="uid://cti31iil0y4al" path="res://src/sences/arrow.tscn" id="2_2asoo"]
+[ext_resource type="Script" uid="uid://d33cyu51t8ctc" path="res://src/scriprts/arrow.gd" id="2_bipsm"]
+[ext_resource type="Texture2D" uid="uid://djs8wa5wx3y1r" path="res://src/assets/sprites/bullet.png" id="3_3jxhc"]
 [ext_resource type="AudioStream" uid="uid://d1c7eitwbgqyx" path="res://src/assets/sounds/hitHurt.wav" id="3_rggqk"]
 [ext_resource type="AudioStream" uid="uid://b55xtmvwkoslc" path="res://src/assets/sounds/jump.wav" id="4_2xjdo"]
 [ext_resource type="AudioStream" uid="uid://c2e3v3cnhbwpd" path="res://src/assets/sounds/Running.mp3" id="5_cevw7"]
 [ext_resource type="FontFile" uid="uid://dbjl1e6kdxpl6" path="res://src/assets/fonts/PixelOperator8.ttf" id="6_cevw7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kxdby"]
+size = Vector2(6, 3)
+
+[sub_resource type="PackedScene" id="PackedScene_0pdyj"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [PackedInt32Array(), PackedInt32Array()],
+"names": PackedStringArray("Arrow", "Area2D", "arrow", "collision_layer", "collision_mask", "script", "Sprite2D", "Sprite2D", "texture", "CollisionShape2D", "CollisionShape2D", "shape"),
+"node_count": 3,
+"node_ids": PackedInt32Array(961413926, 473659843, 1988429717),
+"node_paths": [NodePath("."), NodePath(".")],
+"nodes": PackedInt32Array(-1, -1, 1, 0, -1, 3, 3, 0, 4, 1, 5, 2, 1, 2, 1073741824, 0, 7, 6, -1, 1, 8, 3, 0, 1073741825, 0, 10, 9, -1, 1, 11, 4, 0),
+"variants": [256, 17, ExtResource("2_bipsm"), ExtResource("3_3jxhc"), SubResource("RectangleShape2D_kxdby")],
+"version": 3
+}
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ovfgh"]
 atlas = ExtResource("1_ggan6")
@@ -274,7 +293,7 @@ radius = 6.0
 collision_layer = 2
 collision_mask = 147
 script = ExtResource("1_eabyu")
-arrow_sence = ExtResource("2_2asoo")
+arrow_sence = SubResource("PackedScene_0pdyj")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1426778049]
 zoom = Vector2(4, 4)
@@ -321,6 +340,3 @@ theme_override_font_sizes/font_size = 8
 text = "0.0"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="Arrow" parent="." unique_id=961413926 instance=ExtResource("2_2asoo")]
-position = Vector2(0, -6)

@@ -1,13 +1,30 @@
 extends Area2D
 
+@export var flight_time: float = 2.0
+@export var speed: float = 200.0
+
+# 射箭音效
+
 var is_shooted: bool = false
+var direction: Vector2
+var current_flight_time: float = 0.0
 
-func _process(_delta: float) -> void:
-	if !is_shooted:
-		look_at(get_global_mouse_position())
+func _process(delta):
+	if is_shooted:
+		current_flight_time += delta
+		if current_flight_time >= flight_time:
+			queue_free()
 
-func handle_shoot(pos: Vector2, vec: Vector2) -> void:
-	position = pos
-	print(pos)
-	print(vec)
+func _physics_process(delta: float) -> void:
+	if is_shooted:
+		position += speed * direction * delta
+
+func handle_shoot(dire: Vector2) -> void:
+	direction = dire
 	is_shooted = true
+
+func handle_position(pos: Vector2) -> void:
+	position = pos
+
+func handle_rotation(angle: float) -> void:
+	rotation = angle
