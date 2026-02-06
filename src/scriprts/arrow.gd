@@ -1,9 +1,9 @@
 extends Area2D
 
 @export var flight_time: float = 2.0
-@export var speed: float = 200.0
+@export var speed: float = 300.0
 
-# 射箭音效
+# TODO 射箭音效
 
 var is_shooted: bool = false
 var direction: Vector2

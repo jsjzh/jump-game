@@ -20,14 +20,13 @@ class_name Player
 @export var arrow_sence: PackedScene
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var status_label: Label = $StatusLabel
 @onready var countdown_label: Label = $CountdownLabel
+@onready var status_label: Label = $Camera2D/StatusLabel
 
 @onready var audio_dead: AudioStreamPlayer = $Audio/Dead
 @onready var audio_jump: AudioStreamPlayer = $Audio/Jump
 @onready var audio_roll: AudioStreamPlayer = $Audio/Roll
 @onready var audio_run: AudioStreamPlayer = $Audio/Run
-
 
 var input_direction: Vector2 = Vector2.ZERO
 var is_dead: bool = false
@@ -50,7 +49,7 @@ func _input(event):
 		is_attack = true
 	if event.is_action_released("attack"):
 		if attack_acc_time == attack_max_curr_time:
-			arrow.handle_shoot((get_global_mouse_position() - position).normalized())
+			arrow.handle_shoot((get_global_mouse_position() - Vector2(position.x, position.y - 8)).normalized())
 		else:
 			arrow.queue_free()
 		is_attack = false
@@ -73,8 +72,8 @@ func _process(delta):
 
 	if is_attack:
 		attack_acc_time = clamp(attack_acc_time + delta, 0.0, attack_max_curr_time)
-		arrow.handle_position(Vector2(position.x, position.y - 6))
-		arrow.handle_rotation((get_global_mouse_position() - position).angle())
+		arrow.handle_position(Vector2(position.x, position.y - 8))
+		arrow.handle_rotation((get_global_mouse_position() - Vector2(position.x, position.y - 8)).angle())
 
 	countdown_label.text = "%.1f" % (attack_acc_time)
 
