@@ -15,18 +15,23 @@ class_name Player
 ## 等于 1 秒播完 25 个动画帧，也就是需要配置 animate_sprite 为 25FPS
 ## 计算公式 1(单位时间)/FPS(设置 FPS)=0.3(roll_time)/5(动画帧个数)
 @export var roll_time: float = 0.3
-@export var attack_max_curr_time: float = 1.0 ## 最高蓄力时间
+@export var attack_max_curr_time: float = 0.3 ## 最高蓄力时间
 
 @export var arrow_sence: PackedScene
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+
 @onready var countdown_label: Label = $CountdownLabel
 @onready var status_label: Label = $Camera2D/StatusLabel
+@onready var coins_label: Label = $Camera2D/CoinsLabel
+@onready var score_label: Label = $Camera2D/ScoreLabel
 
 @onready var audio_dead: AudioStreamPlayer = $Audio/Dead
 @onready var audio_jump: AudioStreamPlayer = $Audio/Jump
 @onready var audio_roll: AudioStreamPlayer = $Audio/Roll
 @onready var audio_run: AudioStreamPlayer = $Audio/Run
+@onready var audio_power_up: AudioStreamPlayer = $Audio/PowerUp
+@onready var audio_arrow: AudioStreamPlayer = $Audio/Arrow
 
 var input_direction: Vector2 = Vector2.ZERO
 var is_dead: bool = false
@@ -39,15 +44,24 @@ var attack_acc_time: float = 0.0
 
 var arrow: Node
 
+func _ready():
+	GameController.handle_coin.connect(handle_coin)
+	GameController.handle_score.connect(handle_score)
+
 func _input(event):
 	if is_dead:
 		return
 
 	if event.is_action_pressed("attack"):
+		countdown_label.show()
+		audio_power_up.play()
 		arrow = arrow_sence.instantiate()
 		get_tree().current_scene.add_child(arrow)
 		is_attack = true
 	if event.is_action_released("attack"):
+		countdown_label.hide()
+		audio_power_up.stop()
+		audio_arrow.play(0.08)
 		if attack_acc_time == attack_max_curr_time:
 			arrow.handle_shoot((get_global_mouse_position() - Vector2(position.x, position.y - 8)).normalized())
 		else:
@@ -141,3 +155,9 @@ func on_attack_by_slime() -> void:
 	is_dead = true
 	animated_sprite.play("dead")
 	audio_dead.play()
+
+func handle_coin(coin: int):
+	coins_label.text = "COIN: " + str(coin)
+
+func handle_score(score: int):
+	score_label.text = "SCORE: " + str(score)

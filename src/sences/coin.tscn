@@ -114,5 +114,7 @@ shape = SubResource("CircleShape2D_8338l")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=430190949]
 stream = ExtResource("3_803p2")
+volume_db = -15.0
+bus = &"Sound Effect"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

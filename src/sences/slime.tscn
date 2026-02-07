@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b8urnt7i8k47r" path="res://src/scriprts/slime.gd" id="1_es2yb"]
 [ext_resource type="Texture2D" uid="uid://bl53gpvg5mh1y" path="res://src/assets/sprites/slime_green.png" id="1_p88ns"]
+[ext_resource type="AudioStream" uid="uid://d3ga5iqgco704" path="res://src/assets/sounds/hurt.wav" id="3_gdc8t"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_es2yb"]
 atlas = ExtResource("1_p88ns")
@@ -55,6 +56,11 @@ frame_progress = 0.63826865
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=70749421]
 position = Vector2(0, 7)
 shape = SubResource("CircleShape2D_p88ns")
+
+[node name="Hurt" type="AudioStreamPlayer" parent="." unique_id=569592168]
+stream = ExtResource("3_gdc8t")
+volume_db = -11.069
+bus = &"Sound Effect"
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

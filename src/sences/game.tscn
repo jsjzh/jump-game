@@ -1,8 +1,6 @@
 [gd_scene format=4 uid="uid://dsog6dx4yid23"]
 
 [ext_resource type="PackedScene" uid="uid://wqtduebg4iy8" path="res://src/sences/player.tscn" id="1_6eufb"]
-[ext_resource type="Script" uid="uid://cdx844exeon5h" path="res://src/scriprts/game_controller.gd" id="1_m577r"]
-[ext_resource type="AudioStream" uid="uid://m73dm4jhs3eq" path="res://src/assets/music/time_for_adventure.mp3" id="2_wnnpi"]
 [ext_resource type="Texture2D" uid="uid://dl4n5s2j10vr5" path="res://src/assets/sprites/meged_sence.png" id="3_fu47d"]
 [ext_resource type="PackedScene" uid="uid://bhbbcoictt3b1" path="res://src/sences/coin.tscn" id="3_vntt4"]
 [ext_resource type="PackedScene" uid="uid://dthpkpxlc118c" path="res://src/sences/slime.tscn" id="4_t86ne"]
@@ -213,13 +211,6 @@ sources/3 = SubResource("TileSetAtlasSource_dq8ih")
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_6eufb"]
 
 [node name="Game" type="Node" unique_id=345029013]
-
-[node name="GameController" type="Node" parent="." unique_id=1015556156]
-script = ExtResource("1_m577r")
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="GameController" unique_id=791315865]
-stream = ExtResource("2_wnnpi")
-autoplay = true
 
 [node name="Level1" type="Node" parent="." unique_id=952970197]
 
