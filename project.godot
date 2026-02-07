@@ -15,6 +15,10 @@ run/main_scene="uid://dsog6dx4yid23"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://dalt58x38wlnc"
+
 [autoload]
 
 GameController="*uid://cdx844exeon5h"
@@ -24,6 +28,7 @@ Bgm="*uid://4xaq1ewc0e0k"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/size/mode=3
 window/stretch/mode="canvas_items"
 
 [input]
