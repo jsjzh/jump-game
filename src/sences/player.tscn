@@ -297,13 +297,14 @@ arrow_sence = SubResource("PackedScene_0pdyj")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1426778049]
 position = Vector2(0, -30)
-zoom = Vector2(4, 4)
+zoom = Vector2(3, 3)
 
 [node name="StatusLabel" type="Label" parent="Camera2D" unique_id=2072420841]
-offset_left = -160.0
-offset_top = -90.0
-offset_right = -120.0
-offset_bottom = -67.0
+offset_left = -213.0
+offset_top = -120.0
+offset_right = -173.0
+offset_bottom = -97.0
+size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("6_cevw7")
 theme_override_font_sizes/font_size = 8
 vertical_alignment = 1
