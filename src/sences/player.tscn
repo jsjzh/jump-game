@@ -299,8 +299,8 @@ debug_display_status = false
 arrow_sence = SubResource("PackedScene_0pdyj")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1426778049]
-position = Vector2(0, -30)
-zoom = Vector2(3, 3)
+position = Vector2(0, -52)
+zoom = Vector2(4, 4)
 
 [node name="StatusLabel" type="Label" parent="Camera2D" unique_id=2072420841]
 offset_left = 176.0
