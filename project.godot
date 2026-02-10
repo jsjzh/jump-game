@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Jump Game"
-run/main_scene="uid://dsog6dx4yid23"
+run/main_scene="uid://dm8lr05a2j0t8"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -26,9 +26,6 @@ Bgm="*uid://4xaq1ewc0e0k"
 
 [display]
 
-window/size/viewport_width=1280
-window/size/viewport_height=720
-window/size/mode=3
 window/stretch/mode="canvas_items"
 
 [input]
